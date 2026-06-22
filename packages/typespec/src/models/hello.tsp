@@ -1,4 +1,4 @@
-namespace CfreactTemplate;
+namespace Repojiten;
 
 model HelloResponse {
   message: string;

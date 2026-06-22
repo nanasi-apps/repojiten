@@ -1,4 +1,4 @@
-import { cn } from '@cfreact-template-frontend/ui/lib/utils';
+import { cn } from '@repojiten/frontend-ui/lib/utils';
 
 function Kbd({ className, ...props }: React.ComponentProps<'kbd'>) {
   return (

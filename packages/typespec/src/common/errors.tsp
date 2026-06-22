@@ -1,4 +1,4 @@
-namespace CfreactTemplate;
+namespace Repojiten;
 
 model ErrorResponse {
   error: string;

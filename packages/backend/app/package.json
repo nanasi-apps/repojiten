@@ -1,5 +1,5 @@
 {
-  "name": "@cfreact-template-backend/app",
+  "name": "@repojiten/backend-app",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -8,11 +8,11 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "@cfreact-template-backend/domain": "workspace:*",
-    "@cfreact-template-backend/http": "workspace:*",
-    "@cfreact-template-backend/persistence": "workspace:*",
-    "@cfreact-template-backend/types": "workspace:*",
-    "@cfreact-template-backend/usecases": "workspace:*",
+    "@repojiten/backend-domain": "workspace:*",
+    "@repojiten/backend-http": "workspace:*",
+    "@repojiten/backend-persistence": "workspace:*",
+    "@repojiten/backend-types": "workspace:*",
+    "@repojiten/backend-usecases": "workspace:*",
     "hono": "^4.12.25"
   },
   "scripts": {

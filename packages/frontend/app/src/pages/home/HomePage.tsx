@@ -1,7 +1,7 @@
 import { Link as RouterLink } from 'react-router';
 
-import type { HelloData } from '@cfreact-template-frontend/domain';
-import { useHello } from '@cfreact-template-frontend/domain';
+import type { HelloData } from '@repojiten/frontend-domain';
+import { useHello } from '@repojiten/frontend-domain';
 import {
   Alert,
   AlertTitle,
@@ -14,42 +14,37 @@ import {
   CardTitle,
   Skeleton,
   Spinner,
-} from '@cfreact-template-frontend/ui';
+} from '@repojiten/frontend-ui';
 
-const techStackItems = [
-  'React 19',
-  'Vite 8',
-  'React Router 7',
-  'TanStack Query 5',
-  'shadcn/ui',
-  'Hono 4',
-  'Drizzle ORM 0.45',
-  'TypeScript 5.9',
-  'Cloudflare Workers',
+const foundationItems = [
+  'TypeSpec source of truth',
+  'Generated OpenAPI and SDK',
+  'OpenSpec scenario IDs',
+  'Cloudflare Workers local runtime',
+  'Radix/shadcn UI package',
+  'Clean frontend/backend package boundaries',
 ];
 
-function HeroSection({ onRefresh, isLoading }: { onRefresh: () => void; isLoading: boolean }) {
+function IntroSection({ onRefresh, isLoading }: { onRefresh: () => void; isLoading: boolean }) {
   return (
-    <section className="rounded-xl border bg-muted/40 p-6 sm:p-8">
-      <div className="flex max-w-2xl flex-col gap-4">
+    <section className="space-y-5">
+      <div className="space-y-3">
         <Badge variant="outline" className="w-fit">
-          Cloudflare · React · Hono
+          v0.1 foundation
         </Badge>
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-          Welcome to cfreact-template
-        </h1>
-        <p className="text-muted-foreground">
-          フルスタックで Workers を動かすためのスターター。React + TanStack Query + Hono + Drizzle
-          をすぐに試せます。
+        <h1 className="text-3xl font-bold sm:text-4xl">Repojiten</h1>
+        <p className="max-w-3xl text-muted-foreground">
+          Repository から Wiki と OpenSpec を扱うための開発基盤です。現在の初期画面は、認証や
+          product data に依存せずに frontend と API の起動状態を確認する smoke target です。
         </p>
-        <div className="flex flex-col gap-2 sm:flex-row">
-          <Button asChild size="lg">
-            <RouterLink to="/users">View Users</RouterLink>
-          </Button>
-          <Button variant="outline" size="lg" onClick={onRefresh} disabled={isLoading}>
-            Refresh Hello API
-          </Button>
-        </div>
+      </div>
+      <div className="flex flex-col gap-2 sm:flex-row">
+        <Button variant="outline" size="lg" onClick={onRefresh} disabled={isLoading}>
+          Refresh Hello API
+        </Button>
+        <Button asChild variant="ghost" size="lg">
+          <RouterLink to="/users">Open sample Users</RouterLink>
+        </Button>
       </div>
     </section>
   );
@@ -59,7 +54,7 @@ function ApiHealthCard({ data }: { data: HelloData }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>API Health</CardTitle>
+        <CardTitle>API health</CardTitle>
         <CardDescription>Live response from /api/v1/hello</CardDescription>
       </CardHeader>
       <CardContent>
@@ -99,19 +94,19 @@ function ApiHealthCard({ data }: { data: HelloData }) {
   );
 }
 
-function TechStackCard() {
+function FoundationCard() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Tech Stack</CardTitle>
-        <CardDescription>What powers this template</CardDescription>
+        <CardTitle>Foundation checks</CardTitle>
+        <CardDescription>Repojiten v0.1 が前提にする開発基盤</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-wrap gap-2">
-          {techStackItems.map((item) => (
-            <Badge key={item} variant="outline">
+        <div className="grid gap-2 sm:grid-cols-2">
+          {foundationItems.map((item) => (
+            <div key={item} className="rounded-md border px-3 py-2 text-sm">
               {item}
-            </Badge>
+            </div>
           ))}
         </div>
       </CardContent>
@@ -119,18 +114,18 @@ function TechStackCard() {
   );
 }
 
-/** Landing page with hello API status and tech stack overview. */
+/** Initial Repojiten page with API status and foundation overview. */
 function HomePage() {
   const { data, actions } = useHello();
 
   return (
     <div className="space-y-8">
-      <div className="grid items-stretch gap-6 lg:grid-cols-[1.4fr_1fr]">
-        <HeroSection onRefresh={actions.refresh} isLoading={data.isLoading} />
-        <ApiHealthCard data={data} />
-      </div>
+      <IntroSection onRefresh={actions.refresh} isLoading={data.isLoading} />
 
-      <TechStackCard />
+      <div className="grid items-stretch gap-6 lg:grid-cols-[1fr_1.2fr]">
+        <ApiHealthCard data={data} />
+        <FoundationCard />
+      </div>
     </div>
   );
 }

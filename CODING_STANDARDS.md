@@ -72,12 +72,12 @@
   - NG例
     ```ts
     // packages/backend/domain/src/foo.ts
-    import { routes } from '@cfreact-template-backend/http';
+    import { routes } from '@repojiten/backend-http';
     ```
   - OK例
     ```ts
     // packages/backend/domain/src/foo.ts
-    import type { Something } from '@cfreact-template-backend/types';
+    import type { Something } from '@repojiten/backend-types';
     ```
 
 許可表
@@ -173,12 +173,12 @@
   - 強制: `pnpm lint` → `eslint .` → `rules['no-restricted-imports']` → `eslint.config.js` の `files: ['packages/**/src/**/*.{ts,tsx}']`
   - NG例
     ```ts
-    import { parse } from '@cfreact-template-backend/domain/utils/parse';
+    import { parse } from '@repojiten/backend-domain/utils/parse';
     import { parse2 } from './utils/parse2';
     ```
   - OK例
     ```ts
-    import { parse, parse2 } from '@cfreact-template-backend/domain';
+    import { parse, parse2 } from '@repojiten/backend-domain';
     import { something } from './utils';
     ```
 
@@ -194,7 +194,7 @@
     ```
   - OK例
     ```ts
-    import { x } from '@cfreact-template-backend/domain';
+    import { x } from '@repojiten/backend-domain';
     ```
 
 - ESLint の disable コメントは未使用を残さない
@@ -267,7 +267,7 @@
     - SDK の出力: `packages/frontend/api/orval.config.ts` の `input` と `output.target`
   - NG例
     ```diff
-    -  "title": "cfreact-template API"
+    -  "title": "repojiten API"
     +  "title": "my manual edit"
     ```
   - OK例
@@ -428,22 +428,22 @@
   - 強制: `pnpm lint` → `eslint .` → `rules['no-restricted-imports']` → `eslint.config.js` の `files: ['packages/frontend/app/src/**/*.{ts,tsx}']`
   - NG例
     ```ts
-    import { apiClient } from '@cfreact-template-frontend/api';
+    import { apiClient } from '@repojiten/frontend-api';
     ```
   - OK例
     ```ts
-    import { useUsers } from '@cfreact-template-frontend/domain/hooks/useUsers';
+    import { useUsers } from '@repojiten/frontend-domain/hooks/useUsers';
     ```
 
-- Pages と Components で `@cfreact-template-frontend/domain` をまとめ import しない
+- Pages と Components で `@repojiten/frontend-domain` をまとめ import しない
   - 強制: `pnpm lint` → `eslint .` → `rules['no-restricted-imports']` → `eslint.config.js` の `files: ['packages/frontend/app/src/pages/**/*.{ts,tsx}', 'packages/frontend/app/src/components/**/*.{ts,tsx}']`
   - NG例
     ```ts
-    import { useUsers } from '@cfreact-template-frontend/domain';
+    import { useUsers } from '@repojiten/frontend-domain';
     ```
   - OK例
     ```ts
-    import { useUsers } from '@cfreact-template-frontend/domain/hooks/useUsers';
+    import { useUsers } from '@repojiten/frontend-domain/hooks/useUsers';
     ```
 
 - Pages と Components と Hooks で `fetch` を直接呼ばない
@@ -467,7 +467,7 @@
   - OK例
     ```ts
     // packages/frontend/domain/src/hooks/useUsers.ts
-    import { apiClient } from '@cfreact-template-frontend/api';
+    import { apiClient } from '@repojiten/frontend-api';
     ```
 
 - `pages/` 直下に TSX を置かない
@@ -493,7 +493,7 @@
   - OK例
 
     ```tsx
-    import { useUsers } from '@cfreact-template-frontend/domain/hooks/useUsers';
+    import { useUsers } from '@repojiten/frontend-domain/hooks/useUsers';
 
     export function Page() {
       const { data } = useUsers();
@@ -524,7 +524,7 @@
     ```
   - OK例
     ```tsx
-    import { useUsers } from '@cfreact-template-frontend/domain/hooks/useUsers';
+    import { useUsers } from '@repojiten/frontend-domain/hooks/useUsers';
     ```
 
 - Components で使える React 組み込み Hooks は `useMemo` と `useCallback` だけ
@@ -645,7 +645,7 @@
   - 強制: `pnpm lint` → `eslint .` → `rules['no-restricted-syntax']` → `eslint.config.js` の `files: ['packages/frontend/domain/src/hooks/**/*.{ts,tsx}']`
   - NG例
     ```ts
-    export { apiClient } from '@cfreact-template-frontend/api';
+    export { apiClient } from '@repojiten/frontend-api';
     ```
   - OK例
     ```ts
@@ -669,7 +669,7 @@
   - 強制: `pnpm lint` → `eslint .` → `rules['no-restricted-imports']` → `eslint.config.js` の `files: ['packages/frontend/domain/src/hooks/**/*.{ts,tsx}']`
   - NG例
     ```ts
-    import { Button } from '@cfreact-template-frontend/app/components/Button';
+    import { Button } from '@repojiten/frontend-app/components/Button';
     ```
   - OK例
     ```ts
@@ -706,11 +706,11 @@
   - 強制: `pnpm lint` → `eslint .` → `rules['no-restricted-imports']` → `eslint.config.js` の `files: ['packages/backend/**/src/**/*.{ts,tsx}']`
   - NG例
     ```ts
-    import { buildDeps } from '@cfreact-template-backend/app/server';
+    import { buildDeps } from '@repojiten/backend-app/server';
     ```
   - OK例
     ```ts
-    import { buildDeps } from '@cfreact-template-backend/app';
+    import { buildDeps } from '@repojiten/backend-app';
     ```
 
 - Domain と UseCase では `console` を使わない
@@ -763,11 +763,11 @@
   - 強制: `pnpm lint` → `eslint .` → `rules['no-restricted-imports']` → `eslint.config.js` の `files: ['packages/backend/domain/src/**/*.{ts,tsx}', 'packages/backend/usecases/src/**/*.{ts,tsx}']`
   - NG例
     ```ts
-    import { db } from '@cfreact-template-backend/persistence';
+    import { db } from '@repojiten/backend-persistence';
     ```
   - OK例
     ```ts
-    import type { UserRepository } from '@cfreact-template-backend/domain';
+    import type { UserRepository } from '@repojiten/backend-domain';
     ```
 
 - UseCase で `throw new Error` をしない
@@ -829,11 +829,11 @@
   - 強制: `pnpm lint` → `eslint .` → `rules['no-restricted-imports']` → `eslint.config.js` の `files: ['packages/backend/http/src/**/*.{ts,tsx}']`
   - NG例
     ```ts
-    import { userRepo } from '@cfreact-template-backend/persistence';
+    import { userRepo } from '@repojiten/backend-persistence';
     ```
   - OK例
     ```ts
-    import { createUser } from '@cfreact-template-backend/usecases';
+    import { createUser } from '@repojiten/backend-usecases';
     ```
 
 - HTTP アダプタで `c.env` を参照しない
@@ -851,11 +851,11 @@
   - 強制: `pnpm lint` → `eslint .` → `rules['no-restricted-imports']` → `eslint.config.js` の `files: ['packages/backend/http/src/**/*.{ts,tsx}']`
   - NG例
     ```ts
-    import { buildDeps } from '@cfreact-template-backend/app';
+    import { buildDeps } from '@repojiten/backend-app';
     ```
   - OK例
     ```ts
-    import type { AppDependencies } from '@cfreact-template-backend/usecases';
+    import type { AppDependencies } from '@repojiten/backend-usecases';
     ```
 
 - `zod` は `packages/backend/http/src/schemas` でだけ使う
@@ -965,8 +965,8 @@
   - OK例
     - テストでは制約が一部オフになっている前提で書く
 
-- `**/theme.ts` は行数制約を除外する
-  - 強制: `pnpm lint` → `eslint .` → `files: ['**/theme.ts']` の `max-lines` オフ → `eslint.config.js`
+- shared UI の visual baseline は `packages/frontend/ui/src/styles/globals.css` と `packages/frontend/ui/src/components/ui/**` に集約する
+  - 強制: `pnpm lint` → `eslint .` → shared UI package boundary → `eslint.config.js`
   - NG例
     - theme の分割で逆に可読性が落ちる
   - OK例
@@ -1035,23 +1035,23 @@ fail 条件
 
 - CI では TypeSpec のフォーマットをチェックする
   - 強制: `pnpm format:check` → `scripts.format:check` → `package.json`
-  - 強制: `pnpm --filter @cfreact-template/typespec format:check` → `scripts.format:check` → `packages/typespec/package.json`
+  - 強制: `pnpm --filter @repojiten/typespec format:check` → `scripts.format:check` → `packages/typespec/package.json`
   - NG例
     - `packages/typespec/**/*.tsp` の整形が崩れている
   - OK例
     ```sh
-    pnpm --filter @cfreact-template/typespec format
+    pnpm --filter @repojiten/typespec format
     ```
 
 - CI では TypeSpec がコンパイルできることをチェックする
   - 強制: CI → `pnpm check` → `.github/workflows/ci.yml`
   - 強制: `pnpm check` → `scripts.check` → `package.json`
-  - 強制: `pnpm --filter @cfreact-template/typespec check` → `scripts.check` → `packages/typespec/package.json`
+  - 強制: `pnpm --filter @repojiten/typespec check` → `scripts.check` → `packages/typespec/package.json`
   - NG例
     - `packages/typespec/main.tsp` の記法ミス
   - OK例
     ```sh
-    pnpm --filter @cfreact-template/typespec check
+    pnpm --filter @repojiten/typespec check
     ```
 
 コミットメッセージ

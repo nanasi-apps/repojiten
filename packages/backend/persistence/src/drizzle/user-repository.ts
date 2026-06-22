@@ -1,8 +1,8 @@
 import { eq } from 'drizzle-orm';
 
-import { users } from '@cfreact-template-backend/drizzle';
+import { users } from '@repojiten/backend-drizzle';
 
-import type { User, UserRepository, ValidCreateUserInput } from '@cfreact-template-backend/domain';
+import type { User, UserRepository, ValidCreateUserInput } from '@repojiten/backend-domain';
 
 import type { DrizzleClient } from './db';
 

@@ -256,22 +256,22 @@ export default tseslint.config(
           },
           pathGroups: [
             {
-              pattern: '@cfreact-template-backend/drizzle',
+              pattern: '@repojiten/backend-drizzle',
               group: 'internal',
               position: 'after',
             },
             {
-              pattern: '@cfreact-template-frontend/**',
+              pattern: '@repojiten/frontend-*',
               group: 'internal',
               position: 'after',
             },
             {
-              pattern: '@cfreact-template-frontend/ui/**',
+              pattern: '@repojiten/frontend-ui/**',
               group: 'internal',
               position: 'after',
             },
             {
-              pattern: '@cfreact-template-backend/**',
+              pattern: '@repojiten/backend-*',
               group: 'internal',
               position: 'after',
             },
@@ -500,14 +500,14 @@ export default tseslint.config(
         {
           paths: [
             {
-              name: '@cfreact-template-frontend/api',
+              name: '@repojiten/frontend-api',
               message:
                 'App 層では API パッケージを直接 import せず、domain hooks を経由してください。',
             },
           ],
           patterns: [
             {
-              group: ['@cfreact-template-frontend/api/**'],
+              group: ['@repojiten/frontend-api/**'],
               message:
                 'App 層では API パッケージを直接 import せず、domain hooks を経由してください。',
             },
@@ -867,7 +867,7 @@ export default tseslint.config(
         {
           patterns: [
             {
-              group: ['@cfreact-template-frontend/app/**', '../app/**'],
+              group: ['@repojiten/frontend-app/**', '../app/**'],
               message: 'hooks では UI 層（app/pages/components）の import を禁止します。',
             },
           ],
@@ -946,11 +946,11 @@ export default tseslint.config(
           paths: [
             {
               name: 'axios',
-              message: 'Use @cfreact-template-frontend/api instead of axios.',
+              message: 'Use @repojiten/frontend-api instead of axios.',
             },
             {
               name: 'cross-fetch',
-              message: 'Use @cfreact-template-frontend/api instead of performing manual fetches.',
+              message: 'Use @repojiten/frontend-api instead of performing manual fetches.',
             },
           ],
         },
@@ -1006,11 +1006,11 @@ export default tseslint.config(
           paths: [
             {
               name: 'axios',
-              message: 'Use @cfreact-template-frontend/api instead of axios.',
+              message: 'Use @repojiten/frontend-api instead of axios.',
             },
             {
               name: 'cross-fetch',
-              message: 'Use @cfreact-template-frontend/api instead of performing manual fetches.',
+              message: 'Use @repojiten/frontend-api instead of performing manual fetches.',
             },
             {
               name: 'react',
@@ -1040,7 +1040,7 @@ export default tseslint.config(
           ],
           patterns: [
             {
-              group: ['@cfreact-template-frontend/api/**'],
+              group: ['@repojiten/frontend-api/**'],
               message: 'App 層から API パッケージを直接 import しないでください（domain 経由）。',
             },
           ],
@@ -1127,17 +1127,17 @@ export default tseslint.config(
         {
           paths: [
             {
-              name: '@cfreact-template-frontend/api',
+              name: '@repojiten/frontend-api',
               message: 'Pages/Components は Hooks 経由でAPIを呼び出してください。',
             },
             {
-              name: '@cfreact-template-frontend/domain',
+              name: '@repojiten/frontend-domain',
               message: 'hooks は個別フックを指し示すパスで import してください。',
             },
           ],
           patterns: [
             {
-              group: ['@cfreact-template-frontend/app/src/components/**'],
+              group: ['@repojiten/frontend-app/src/components/**'],
               message: 'components 同士の循環参照を避け、必要なら hooks 経由にしてください。',
             },
           ],
@@ -1192,10 +1192,10 @@ export default tseslint.config(
             {
               group: ['../**'],
               message:
-                '@cfreact-template-backend/* エイリアスでパッケージ内の上位ディレクトリを参照してください。',
+                '@repojiten/backend-* エイリアスでパッケージ内の上位ディレクトリを参照してください。',
             },
             {
-              group: ['@cfreact-template-backend/app/**'],
+              group: ['@repojiten/backend-app/**'],
               message: 'App層の依存はappパッケージ内でのみ利用してください。',
             },
           ],
@@ -1213,7 +1213,7 @@ export default tseslint.config(
             {
               group: ['../**'],
               message:
-                '@cfreact-template-backend/* エイリアスでパッケージ内の上位ディレクトリを参照してください。',
+                '@repojiten/backend-* エイリアスでパッケージ内の上位ディレクトリを参照してください。',
             },
           ],
         },
@@ -1231,8 +1231,8 @@ export default tseslint.config(
           patterns: [
             {
               group: [
-                '@cfreact-template-backend/http/**',
-                '@cfreact-template-backend/persistence/**',
+                '@repojiten/backend-http/**',
+                '@repojiten/backend-persistence/**',
                 '../http/**',
                 '../persistence/**',
               ],
@@ -1272,8 +1272,8 @@ export default tseslint.config(
           patterns: [
             {
               group: [
-                '@cfreact-template-backend/http/**',
-                '@cfreact-template-backend/persistence/**',
+                '@repojiten/backend-http/**',
+                '@repojiten/backend-persistence/**',
                 '../http/**',
                 '../persistence/**',
               ],
@@ -1400,7 +1400,7 @@ export default tseslint.config(
         {
           paths: [
             {
-              name: '@cfreact-template-backend/app',
+              name: '@repojiten/backend-app',
               message:
                 'HTTPアダプタ層から App 層を参照しないでください。必要な型は usecases/types から参照してください。',
             },
@@ -1418,19 +1418,19 @@ export default tseslint.config(
             {
               group: ['../**'],
               message:
-                '@cfreact-template-backend/* エイリアスでパッケージ内の上位ディレクトリを参照してください。',
+                '@repojiten/backend-* エイリアスでパッケージ内の上位ディレクトリを参照してください。',
             },
             {
               group: [
                 '../persistence/**',
                 '../../persistence/**',
-                '@cfreact-template-backend/persistence/**',
+                '@repojiten/backend-persistence/**',
               ],
               message:
                 'HTTPアダプタ層から直接Persistence層を参照せず、UseCase経由でアクセスしてください。',
             },
             {
-              group: ['@cfreact-template-backend/app/**'],
+              group: ['@repojiten/backend-app/**'],
               message:
                 'HTTPアダプタ層から App 層を参照しないでください。必要な型は usecases/types から参照してください。',
             },
@@ -1480,7 +1480,7 @@ export default tseslint.config(
               group: [
                 '../persistence/**',
                 '../../persistence/**',
-                '@cfreact-template-backend/persistence/**',
+                '@repojiten/backend-persistence/**',
               ],
               message:
                 'HTTPアダプタ層から直接Persistence層を参照せず、UseCase経由でアクセスしてください。',
@@ -1511,7 +1511,7 @@ export default tseslint.config(
               group: [
                 '../persistence/**',
                 '../../persistence/**',
-                '@cfreact-template-backend/persistence/**',
+                '@repojiten/backend-persistence/**',
               ],
               message:
                 'HTTPアダプタ層から直接Persistence層を参照せず、UseCase経由でアクセスしてください。',
@@ -1587,9 +1587,9 @@ export default tseslint.config(
             {
               group: [
                 '**/src/**/!(*index)',
-                '@cfreact-template-frontend/**/!(*index)',
-                '@cfreact-template-backend/**/!(*index)',
-                '@cfreact-template/**/!(*index)',
+                '@repojiten/frontend-*/**/!(*index)',
+                '@repojiten/backend-*/**/!(*index)',
+                '@repojiten/**/!(*index)',
                 './**/!(*index)',
                 '../**/!(*index)',
               ],
@@ -1639,14 +1639,6 @@ export default tseslint.config(
       'security/detect-object-injection': 'off',
       'sonarjs/no-duplicate-string': 'off',
       'unicorn/no-array-for-each': 'off',
-    },
-  },
-  // theme.ts は行数制約を緩和
-  {
-    files: ['**/theme.ts'],
-    rules: {
-      'max-lines': 'off',
-      'max-lines-per-function': 'off',
     },
   },
   // JavaScript ファイルの設定
