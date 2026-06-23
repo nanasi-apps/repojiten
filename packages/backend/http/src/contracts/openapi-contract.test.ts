@@ -36,7 +36,7 @@ const getOperationsIndex = (doc: OpenApiDocument): Map<string, Map<string, OpenA
 };
 
 describe('OpenAPI contract', () => {
-  it('[REPOJITEN-FOUNDATION-BE-S001] server routes match the Repojiten API contract', () => {
+  it('server routes match the Repojiten API contract', () => {
     const serverDoc = toDoc(
       getOpenApiDocument({
         openapi: '3.0.3',
