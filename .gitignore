@@ -12,6 +12,12 @@ build/
 *.tsbuildinfo
 .vite/
 
+# Keep the SPA assets directory present (served via wrangler `[assets]`),
+# but ignore its build output contents.
+!packages/frontend/app/dist/
+packages/frontend/app/dist/*
+!packages/frontend/app/dist/.gitkeep
+
 # Logs
 logs
 *.log

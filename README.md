@@ -109,10 +109,23 @@ repojiten/
 
    # R2 バケットを作成
    wrangler r2 bucket create repojiten-bucket
+
+   # 生成ジョブ用の Queue と Dead Letter Queue を作成
+   wrangler queues create repojiten-generation
+   wrangler queues create repojiten-generation-dlq
    ```
 
-5. **wrangler.toml を更新:**
+   > Cloudflare Queues は Workers の有料プランが必要です。
+
+5. **wrangler.toml を更新し、ローカル secret を用意:**
    - ステップ 4 で取得した実際の ID で `YOUR_DATABASE_ID_HERE`、`YOUR_KV_NAMESPACE_ID_HERE` を置き換える
+   - `.dev.vars.example` を `.dev.vars` にコピーして secret を設定する（`.dev.vars` は gitignore 済み）:
+
+     ```bash
+     cp .dev.vars.example .dev.vars
+     ```
+
+   - 必要な値: `GITHUB_WEBHOOK_SECRET`（GitHub webhook 署名検証）、`GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET`（GitHub OAuth・#2）、`SESSION_SECRET`（session 署名・#2）、`APP_BASE_URL`
 
 6. **マイグレーションを生成・適用:**
 
@@ -337,6 +350,11 @@ Repojiten は、データベースマイグレーションに Drizzle Kit を使
 
 ### Cloudflare Workers にデプロイ
 
+API と SPA は **1 つの Worker** で配信します。`pnpm build` で frontend を
+`packages/frontend/app/dist` にビルドし、`wrangler deploy` が Worker と
+static assets（`[assets]` 設定）をまとめてアップロードします。`/api` と
+`/webhooks` 以外の未マッチ request は SPA の `index.html` にフォールバックします。
+
 1. **Cloudflare にログイン:**
 
    ```bash
@@ -357,29 +375,50 @@ Repojiten は、データベースマイグレーションに Drizzle Kit を使
 
    依存追加・更新を含むリリースでは、対象パッケージの npm 公開から72時間以上経過していることを確認してください。
 
-4. **デフォルト環境へデプロイ:**
+4. **secret を設定:**
+
+   ```bash
+   wrangler secret put GITHUB_WEBHOOK_SECRET
+   # GitHub OAuth / session（#2 で利用）
+   wrangler secret put GITHUB_CLIENT_SECRET
+   wrangler secret put SESSION_SECRET
+   ```
+
+5. **デフォルト環境へデプロイ:**
 
    ```bash
    pnpm deploy
    ```
 
-5. **本番環境リソースをセットアップ:**
-   - 本番環境の D1 データベース、KV 名前空間、R2 バケットを作成
+6. **GitHub webhook を設定:**
+   - GitHub repository の Webhooks に `https://<your-worker-domain>/webhooks/github` を追加
+   - Content type は `application/json`、Secret は `GITHUB_WEBHOOK_SECRET` と同じ値
+   - `develop` への push を受けると再生成ジョブが Queue に enqueue されます
+
+7. **本番環境リソースをセットアップ:**
+   - 本番環境の D1 データベース、KV 名前空間、R2 バケット、Queue（`repojiten-generation-production` と DLQ）を作成
    - `wrangler.toml` の `[env.production]` セクションを更新
    - 本番環境データベースにマイグレーションを適用
+   - `wrangler secret put <NAME> --env production` で production の secret を設定
 
-6. **production 環境へデプロイする場合:**
+8. **production 環境へデプロイする場合:**
 
    ```bash
    pnpm build
    wrangler deploy --env production
    ```
 
-### 環境変数
+### 環境変数と secret
 
-本番環境でメール送信値を secret として扱う場合、Wrangler を使用して設定します：
+非 secret の値（`EMAIL_FROM` / `EMAIL_TO` / `APP_BASE_URL` / `GITHUB_CLIENT_ID`）は
+`wrangler.toml` の `[vars]` に置きます。secret は repository に commit せず、ローカルでは
+`.dev.vars`（`.dev.vars.example` を参照）、本番では Wrangler の secret として設定します：
 
 ```bash
+wrangler secret put GITHUB_WEBHOOK_SECRET
+wrangler secret put GITHUB_CLIENT_SECRET
+wrangler secret put SESSION_SECRET
+# メール送信値を secret として扱う場合
 wrangler secret put EMAIL_FROM
 wrangler secret put EMAIL_TO
 ```

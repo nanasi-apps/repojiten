@@ -2,8 +2,12 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
 
-import { createUsersUseCases } from '@repojiten/backend-app';
-import { openApiApp, type AppVariables } from '@repojiten/backend-http';
+import { createGithubWebhookUseCases, createUsersUseCases } from '@repojiten/backend-app';
+import {
+  openApiApp,
+  registerGithubWebhookRoutes,
+  type AppVariables,
+} from '@repojiten/backend-http';
 import type { Bindings } from '@repojiten/backend-types';
 
 const app = new Hono<{ Bindings: Bindings; Variables: AppVariables }>();
@@ -12,6 +16,7 @@ const app = new Hono<{ Bindings: Bindings; Variables: AppVariables }>();
 app.use('*', logger());
 app.use('*', async (c, next) => {
   c.set('usersUseCases', createUsersUseCases(c.env));
+  c.set('githubWebhookUseCases', createGithubWebhookUseCases(c.env));
   await next();
 });
 app.use(
@@ -22,6 +27,9 @@ app.use(
   })
 );
 
+// GitHub webhook intake (outside the versioned /api/v1 surface)
+registerGithubWebhookRoutes(app);
+
 // Routes
 app.route('/', openApiApp);
 
@@ -30,9 +38,14 @@ app.get('/health', (c) => {
   return c.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// 404 handler
+// SPA static assets fallback (API/webhook misses still return JSON 404)
 app.notFound((c) => {
-  return c.json({ error: 'Not Found', path: c.req.path }, 404);
+  const { pathname } = new URL(c.req.url);
+  if (pathname.startsWith('/api/') || pathname.startsWith('/webhooks/')) {
+    return c.json({ error: 'Not Found', path: c.req.path }, 404);
+  }
+
+  return c.env.ASSETS.fetch(c.req.raw);
 });
 
 // Error handler
