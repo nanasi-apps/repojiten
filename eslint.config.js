@@ -1122,7 +1122,7 @@ export default tseslint.config(
           ],
           patterns: [
             {
-              group: ['@repojiten/frontend-app/src/components/**'],
+              group: ['@repojiten/frontend-app/components/**'],
               message: 'components 同士の循環参照を避け、必要なら hooks 経由にしてください。',
             },
           ],
