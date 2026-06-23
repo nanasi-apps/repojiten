@@ -3,9 +3,16 @@ main = "packages/backend/entry/src/index.ts"
 compatibility_date = "2025-11-13"
 compatibility_flags = ["nodejs_compat"]
 
-# Workers Sites for serving static files (optional)
-# [site]
-# bucket = "./packages/frontend/app/dist"
+# Single-Worker deploy: the SPA build output is served as static assets and
+# unmatched (non-API, non-webhook) routes fall back to index.html.
+[assets]
+directory = "./packages/frontend/app/dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+
+# Secrets (set via `wrangler secret put <NAME>`, never committed):
+#   GITHUB_CLIENT_SECRET, GITHUB_WEBHOOK_SECRET, SESSION_SECRET
+# Local dev provides these via .dev.vars (see .dev.vars.example).
 
 [[d1_databases]]
 binding = "DB"
@@ -21,19 +28,39 @@ id = "YOUR_KV_NAMESPACE_ID_HERE"
 binding = "R2"
 bucket_name = "repojiten-bucket"
 
+[[queues.producers]]
+binding = "GENERATION_QUEUE"
+queue = "repojiten-generation"
+
+[[queues.consumers]]
+queue = "repojiten-generation"
+max_batch_size = 10
+max_batch_timeout = 30
+max_retries = 5
+dead_letter_queue = "repojiten-generation-dlq"
+
 [[send_email]]
 name = "EMAIL"
 
 [vars]
 EMAIL_FROM = "noreply@example.com"
 EMAIL_TO = "recipient@example.com"
+APP_BASE_URL = "http://localhost:8787"
+GITHUB_CLIENT_ID = ""
 
 [env.production]
 name = "repojiten-server-production"
 
+[env.production.assets]
+directory = "./packages/frontend/app/dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+
 [env.production.vars]
 EMAIL_FROM = "noreply@example.com"
 EMAIL_TO = "recipient@example.com"
+APP_BASE_URL = "https://repojiten.example.com"
+GITHUB_CLIENT_ID = ""
 
 [[env.production.d1_databases]]
 binding = "DB"
@@ -48,6 +75,17 @@ id = "YOUR_PRODUCTION_KV_NAMESPACE_ID_HERE"
 [[env.production.r2_buckets]]
 binding = "R2"
 bucket_name = "repojiten-bucket-production"
+
+[[env.production.queues.producers]]
+binding = "GENERATION_QUEUE"
+queue = "repojiten-generation-production"
+
+[[env.production.queues.consumers]]
+queue = "repojiten-generation-production"
+max_batch_size = 10
+max_batch_timeout = 30
+max_retries = 5
+dead_letter_queue = "repojiten-generation-production-dlq"
 
 [[env.production.send_email]]
 name = "EMAIL"

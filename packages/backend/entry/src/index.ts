@@ -1,1 +1,1 @@
-export { server as default } from '@repojiten/backend-app';
+export { worker as default } from '@repojiten/backend-app';
