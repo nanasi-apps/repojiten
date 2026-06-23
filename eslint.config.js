@@ -256,22 +256,7 @@ export default tseslint.config(
           },
           pathGroups: [
             {
-              pattern: '@repojiten/backend-drizzle',
-              group: 'internal',
-              position: 'after',
-            },
-            {
-              pattern: '@repojiten/frontend-*',
-              group: 'internal',
-              position: 'after',
-            },
-            {
-              pattern: '@repojiten/frontend-ui/**',
-              group: 'internal',
-              position: 'after',
-            },
-            {
-              pattern: '@repojiten/backend-*',
+              pattern: '@repojiten/**',
               group: 'internal',
               position: 'after',
             },

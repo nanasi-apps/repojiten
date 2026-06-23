@@ -1,5 +1,8 @@
 import { createRoute, type OpenAPIHono } from '@hono/zod-openapi';
 
+import { InvalidCreateUserInputError } from '@repojiten/backend-domain';
+import type { User } from '@repojiten/backend-domain';
+import type { AppVariables } from '@repojiten/backend-http/context';
 import {
   createUserInputSchema,
   errorResponseSchema,
@@ -7,13 +10,8 @@ import {
   userResponseSchema,
   usersListResponseSchema,
 } from '@repojiten/backend-http/schemas';
-
-import { InvalidCreateUserInputError } from '@repojiten/backend-domain';
-import type { User } from '@repojiten/backend-domain';
 import type { Bindings } from '@repojiten/backend-types';
 import type { UsersUseCases } from '@repojiten/backend-usecases';
-
-import type { AppVariables } from '@repojiten/backend-http/context';
 
 const listUsersRoute = createRoute({
   method: 'get',

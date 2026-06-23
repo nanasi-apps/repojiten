@@ -2,7 +2,6 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 
 import { usersApi } from '@repojiten/frontend-api';
-
 import type { CreateUserPayload, User } from '@repojiten/frontend-api/types';
 
 /** Data exposed by the users domain hook. */

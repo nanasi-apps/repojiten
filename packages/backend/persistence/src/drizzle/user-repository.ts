@@ -1,8 +1,7 @@
 import { eq } from 'drizzle-orm';
 
-import { users } from '@repojiten/backend-drizzle';
-
 import type { User, UserRepository, ValidCreateUserInput } from '@repojiten/backend-domain';
+import { users } from '@repojiten/backend-drizzle';
 
 import type { DrizzleClient } from './db';
 

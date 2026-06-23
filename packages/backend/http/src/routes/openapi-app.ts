@@ -1,11 +1,10 @@
 import { OpenAPIHono, type Hook } from '@hono/zod-openapi';
 
+import type { AppVariables } from '@repojiten/backend-http/context';
 import type { Bindings } from '@repojiten/backend-types';
 
 import { registerHelloRoutes } from './hello';
 import { registerUsersRoutes } from './users';
-
-import type { AppVariables } from '@repojiten/backend-http/context';
 
 interface ApiEnv {
   Bindings: Bindings;

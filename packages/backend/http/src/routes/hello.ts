@@ -1,10 +1,8 @@
 import { createRoute, type OpenAPIHono } from '@hono/zod-openapi';
 
-import { helloResponseSchema } from '@repojiten/backend-http/schemas';
-
-import type { Bindings } from '@repojiten/backend-types';
-
 import type { AppVariables } from '@repojiten/backend-http/context';
+import { helloResponseSchema } from '@repojiten/backend-http/schemas';
+import type { Bindings } from '@repojiten/backend-types';
 
 const helloRoute = createRoute({
   method: 'get',
