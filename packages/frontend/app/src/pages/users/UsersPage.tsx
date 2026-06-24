@@ -1,5 +1,5 @@
-import type { UsersActions, UsersData } from '@cfreact-template-frontend/domain';
-import { useUsers } from '@cfreact-template-frontend/domain';
+import type { UsersActions, UsersData } from '@repojiten/frontend-domain';
+import { useUsers } from '@repojiten/frontend-domain';
 import {
   Alert,
   AlertTitle,
@@ -20,17 +20,18 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@cfreact-template-frontend/ui';
+} from '@repojiten/frontend-ui';
 
 function PageHeader() {
   return (
     <div className="space-y-1">
       <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-        User Directory
+        Sample route
       </p>
-      <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Users</h1>
+      <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Sample Users</h1>
       <p className="text-muted-foreground">
-        Create users, validate inputs, and view them in a responsive table.
+        Repojiten v0.1 の product capability ではなく、API・D1・form wiring を確認する一時的な
+        sample です。
       </p>
     </div>
   );
@@ -45,8 +46,8 @@ function CreateUserForm({ data, actions }: { data: UsersData; actions: UsersActi
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Create New User</CardTitle>
-        <CardDescription>名前とメールアドレスを入力してユーザーを作成します</CardDescription>
+        <CardTitle>Create Sample User</CardTitle>
+        <CardDescription>名前とメールアドレスを入力して sample user を作成します</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit}>
@@ -113,7 +114,9 @@ function UsersTable({ data }: { data: UsersData }) {
     return (
       <div className="rounded-lg border p-10 text-center">
         <h2 className="text-lg font-semibold">No users found</h2>
-        <p className="mt-1 text-sm text-muted-foreground">Create one above to get started.</p>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Create one above to confirm the sample API path.
+        </p>
       </div>
     );
   }
@@ -144,7 +147,7 @@ function UsersTable({ data }: { data: UsersData }) {
   );
 }
 
-/** Users management page with list and creation form. */
+/** Sample users page with list and creation form. */
 function UsersPage() {
   const { data, actions } = useUsers();
 
@@ -174,7 +177,7 @@ function UsersPage() {
 
       <Separator />
       <div className="text-sm text-muted-foreground">
-        <p>Powered by Cloudflare Workers + Hono + Drizzle</p>
+        <p>Sample only. Product user flows will be replaced by later v0.1 issues.</p>
       </div>
     </div>
   );

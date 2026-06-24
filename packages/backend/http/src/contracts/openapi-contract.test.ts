@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { getOpenApiDocument } from '@cfreact-template-backend/http';
+import { getOpenApiDocument } from '@repojiten/backend-http';
 
 import contractOpenApi from '../../../../typespec/openapi/openapi.json';
 
@@ -36,18 +36,20 @@ const getOperationsIndex = (doc: OpenApiDocument): Map<string, Map<string, OpenA
 };
 
 describe('OpenAPI contract', () => {
-  it('server routes match the TypeSpec OpenAPI contract (paths/methods/operationId)', () => {
+  it('server routes match the Repojiten API contract', () => {
     const serverDoc = toDoc(
       getOpenApiDocument({
         openapi: '3.0.3',
         info: {
-          title: 'cfreact-template API',
+          title: 'Repojiten API',
           version: '1.0.0',
         },
         servers: [{ url: '/', description: 'Default server' }],
       })
     );
     const contractDoc = toDoc(contractOpenApi);
+
+    expect(contractOpenApi.info.title).toBe('Repojiten API');
 
     const serverIndex = getOperationsIndex(serverDoc);
     const contractIndex = getOperationsIndex(contractDoc);

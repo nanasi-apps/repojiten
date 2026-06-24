@@ -1,22 +1,22 @@
-# cfreact-template
+# Repojiten
 
-**Cloudflare Workers** 上で React、Hono、Drizzle ORM を使用した本番環境対応アプリケーションを構築するためのフルスタックテンプレート。
+Repojiten は、repository を読み込み、Wiki と OpenSpec を扱うための v0.1 開発基盤です。**Cloudflare Workers** 上で React、Hono、Drizzle ORM、TypeSpec、OpenSpec を使用したフルスタックアプリケーションとして構成されています。
 
 ## 技術スタック
 
 ### フロントエンド
 
 - **React** 19.2.3 - React Compiler サポート付き UI ライブラリ
-- **Vite** 7.3.1 - ビルドツール
-- **React Router** 7.12.0 - ルーティング
-- **TanStack Query** 5.90.16 - データフェッチとキャッシング
-- **Material UI** 7.3.6 - コンポーネントライブラリ
+- **Vite** 8.0.16 - ビルドツール
+- **React Router** 7.17.0 - ルーティング
+- **TanStack Query** 5.101.0 - データフェッチとキャッシング
+- **Radix UI / shadcn style components** - コンポーネントライブラリ
 - **TypeScript** 5.9+ - 型安全性
 
 ### バックエンド
 
-- **Hono** 4.11.3 - 高速で軽量な Web フレームワーク
-- **Drizzle ORM** 0.45.1 - D1 用の型安全 ORM
+- **Hono** 4.12.25 - 高速で軽量な Web フレームワーク
+- **Drizzle ORM** 0.45.2 - D1 用の型安全 ORM
 - **Cloudflare Workers** - サーバーレスランタイム
 - **Cloudflare D1** - SQLite データベース
 - **Cloudflare KV** - キーバリューストレージ
@@ -35,33 +35,32 @@
 ## プロジェクト構成
 
 ```
-cfreact-template/
+repojiten/
 ├── packages/
 │   ├── typespec/                  # TypeSpec (API 契約) - OpenAPI の正
-│   ├── client/
-│   │   ├── app/                  # プレゼンテーション層 (pages/components/router) - Vite
-│   │   ├── domain/               # ドメインフック層 (TanStack Query 等はここでのみ)
-│   │   └── api/                  # OpenAPI 生成 SDK + API ラッパー（React 非依存）
-│   ├── server/                   # Cloudflare Workers バックエンド（クリーンアーキ分割済み）
-│   │   ├── types/                # Bindings 等の共有型
-│   │   ├── domain/               # エンティティ/リポジトリIF
-│   │   ├── usecases/             # アプリケーションサービス
-│   │   ├── http/                 # Hono ルート（インバウンドアダプタ）
-│   │   ├── persistence/          # Drizzle などの永続化アダプタ
-│   │   ├── app/                  # DI / 配線
-│   │   └── entry/                # Workers エントリーポイント
-│   ├── drizzle/                  # Drizzle ORM スキーマ
-│   │   └── src/schema.ts         # D1 テーブル定義
-│   └── ui/                       # Material UI ベースの UI パッケージ
-│       └── src/theme.ts          # テーマ設定
+│   ├── frontend/
+│   │   ├── app/                   # プレゼンテーション層 (pages/components/router) - Vite
+│   │   ├── domain/                # ドメインフック層 (TanStack Query 等はここでのみ)
+│   │   ├── api/                   # OpenAPI 生成 SDK + API ラッパー（React 非依存）
+│   │   └── ui/                    # Radix UI / shadcn style の共有 UI パッケージ
+│   └── backend/                   # Cloudflare Workers バックエンド（クリーンアーキ分割済み）
+│       ├── types/                 # Bindings 等の共有型
+│       ├── domain/                # エンティティ/リポジトリIF
+│       ├── usecases/              # アプリケーションサービス
+│       ├── http/                  # Hono ルート（インバウンドアダプタ）
+│       ├── persistence/           # Drizzle などの永続化アダプタ
+│       ├── app/                   # DI / 配線
+│       ├── entry/                 # Workers エントリーポイント
+│       └── drizzle/               # Drizzle ORM スキーマ
 ├── drizzle/
-│   └── migrations/           # データベースマイグレーション
-├── tests/                    # e2e などの統合テスト（Playwright）
-├── .devcontainer/            # Dev Container 設定
-├── wrangler.toml             # Cloudflare 設定
-├── drizzle.config.ts         # Drizzle Kit 設定
-├── pnpm-workspace.yaml       # pnpm ワークスペース設定
-└── package.json              # ルート package.json
+│   └── migrations/                # データベースマイグレーション
+├── openspec/                      # OpenSpec specs / archived changes
+├── tests/                         # e2e などの統合テスト（Playwright）
+├── .devcontainer/                 # Dev Container 設定
+├── wrangler.toml                  # Cloudflare 設定
+├── drizzle.config.ts              # Drizzle Kit 設定
+├── pnpm-workspace.yaml            # pnpm ワークスペース設定
+└── package.json                   # ルート package.json
 ```
 
 ## 前提条件
@@ -83,7 +82,7 @@ cfreact-template/
 
    ```bash
    git clone <your-repo-url>
-   cd cfreact-template
+   cd repojiten
    ```
 
 2. **VS Code で開く:**
@@ -103,13 +102,13 @@ cfreact-template/
 
    ```bash
    # D1 データベースを作成
-   wrangler d1 create cfreact-template-db
+   wrangler d1 create repojiten-db
 
    # KV 名前空間を作成
-   wrangler kv:namespace create KV
+   wrangler kv namespace create repojiten-kv
 
    # R2 バケットを作成
-   wrangler r2 bucket create cfreact-template-bucket
+   wrangler r2 bucket create repojiten-bucket
    ```
 
 5. **wrangler.toml を更新:**
@@ -122,10 +121,10 @@ cfreact-template/
    pnpm migrate:generate
 
    # ローカルでマイグレーションを適用
-   wrangler d1 execute cfreact-template-db --local --file=./drizzle/migrations/<migration-file>.sql
+   wrangler d1 execute repojiten-db --local --file=./drizzle/migrations/<migration-file>.sql
 
    # 本番環境でマイグレーションを適用
-   wrangler d1 execute cfreact-template-db --remote --file=./drizzle/migrations/<migration-file>.sql
+   wrangler d1 execute repojiten-db-production --remote --file=./drizzle/migrations/<migration-file>.sql
    ```
 
 7. **開発サーバーを起動:**
@@ -135,18 +134,19 @@ cfreact-template/
    pnpm dev:all
 
    # または個別に起動:
-   pnpm dev:server  # バックエンド http://localhost:8787 （@cfreact-template-backend/entry）
-   pnpm dev:client  # フロントエンド http://localhost:5173 （@cfreact-template-frontend/app）
+   pnpm dev:server  # バックエンド http://localhost:8787 （@repojiten/backend-entry）
+   pnpm dev:client  # フロントエンド http://localhost:5173 （@repojiten/frontend-app）
    ```
 
 8. **アプリケーションにアクセス:**
    - フロントエンド: http://localhost:5173
    - バックエンド API: http://localhost:8787/api
+   - `/users` は API、D1、form wiring を確認するための一時的な sample route です
    - Drizzle Studio: `pnpm migrate:studio`
 
 ### API SDK の再生成 (TypeSpec -> OpenAPI -> SDK)
 
-このテンプレートでは TypeSpec を API 契約の正（Single Source of Truth）とし、
+このプロジェクトでは TypeSpec を API 契約の正（Single Source of Truth）とし、
 TypeSpec から OpenAPI を生成してクライアント SDK（`packages/frontend/api`）を自動生成します。
 
 ```bash
@@ -158,7 +158,7 @@ pnpm gen:api-sdk
 
 ```bash
 pnpm gen:openapi
-pnpm --filter @cfreact-template-frontend/api gen
+pnpm --filter @repojiten/frontend-api gen
 ```
 
 ### 方法 2: 手動セットアップ
@@ -234,7 +234,7 @@ AI 支援開発に OpenCode と OpenSpec を使用する場合：
 
 ### 開発サーバーの起動
 
-テンプレートは Vite のプロキシを使用して、フロントエンドからの `/api` リクエストを Workers 開発サーバーに転送します。
+Repojiten は Vite のプロキシを使用して、フロントエンドからの `/api` リクエストを Workers 開発サーバーに転送します。
 
 ```bash
 # ターミナル 1: Workers バックエンドを起動
@@ -290,7 +290,7 @@ pnpm dev:all
 
 ### データベースマイグレーション
 
-このテンプレートは、データベースマイグレーションに Drizzle Kit を使用します。
+Repojiten は、データベースマイグレーションに Drizzle Kit を使用します。
 
 1. **スキーマを変更:**
    - `packages/backend/drizzle/src/schema.ts` を編集
@@ -304,13 +304,13 @@ pnpm dev:all
 3. **ローカルでマイグレーションを適用:**
 
    ```bash
-   wrangler d1 execute cfreact-template-db --local --file=./drizzle/migrations/<file>.sql
+   wrangler d1 execute repojiten-db --local --file=./drizzle/migrations/<file>.sql
    ```
 
 4. **本番環境でマイグレーションを適用:**
 
    ```bash
-   wrangler d1 execute cfreact-template-db --remote --file=./drizzle/migrations/<file>.sql
+   wrangler d1 execute repojiten-db-production --remote --file=./drizzle/migrations/<file>.sql
    ```
 
 5. **Drizzle Studio でデータベースを表示:**
@@ -325,11 +325,11 @@ pnpm dev:all
 
 - `GET /api/v1/hello` - シンプルなヘルスチェック
 
-### Users
+### Users（sample）
 
-- `GET /api/v1/users` - すべてのユーザーを一覧表示
-- `POST /api/v1/users` - 新しいユーザーを作成
-- `GET /api/v1/users/:id` - ID でユーザーを取得
+- `GET /api/v1/users` - sample user を一覧表示
+- `POST /api/v1/users` - sample user を作成
+- `GET /api/v1/users/:id` - ID で sample user を取得
 
 詳細な API 仕様は `packages/typespec/openapi/openapi.json` を参照してください。
 
@@ -357,7 +357,7 @@ pnpm dev:all
 
    依存追加・更新を含むリリースでは、対象パッケージの npm 公開から72時間以上経過していることを確認してください。
 
-4. **デプロイ:**
+4. **デフォルト環境へデプロイ:**
 
    ```bash
    pnpm deploy
@@ -368,19 +368,25 @@ pnpm dev:all
    - `wrangler.toml` の `[env.production]` セクションを更新
    - 本番環境データベースにマイグレーションを適用
 
+6. **production 環境へデプロイする場合:**
+
+   ```bash
+   pnpm build
+   wrangler deploy --env production
+   ```
+
 ### 環境変数
 
-本番環境の場合、Wrangler を使用して環境変数を設定します：
+本番環境でメール送信値を secret として扱う場合、Wrangler を使用して設定します：
 
 ```bash
-wrangler secret put CLOUDFLARE_ACCOUNT_ID
-wrangler secret put CLOUDFLARE_DATABASE_ID
-wrangler secret put CLOUDFLARE_D1_TOKEN
+wrangler secret put EMAIL_FROM
+wrangler secret put EMAIL_TO
 ```
 
 ## OpenSpec による仕様駆動開発
 
-このテンプレートには、OpenSpec の運用をサポートするディレクトリ構造が含まれています。
+このプロジェクトには、OpenSpec の運用をサポートするディレクトリ構造が含まれています。
 
 ### OpenSpec とは
 
@@ -420,7 +426,7 @@ OpenCode で以下のコマンドが使えます：
 
 ## Serena MCP - セマンティックコード検索
 
-このテンプレートには、OpenCode と統合できる Serena MCP Server が設定されています。Serena は Language Server Protocol (LSP) を使用して、IDE 並みのコード理解機能を提供します。
+このプロジェクトには、OpenCode と統合できる Serena MCP Server が設定されています。Serena は Language Server Protocol (LSP) を使用して、IDE 並みのコード理解機能を提供します。
 
 ### 機能
 
@@ -464,28 +470,15 @@ http://localhost:24282/dashboard
 
 ## カスタマイズ
 
-### Material UI テーマ
+### 共有 UI のカスタマイズ
 
-`packages/frontend/ui/src/theme.ts` でテーマをカスタマイズ：
+共有 UI は `packages/frontend/ui` に配置しています。
 
-```typescript
-import { createTheme, responsiveFontSizes } from '@mui/material/styles';
+- `packages/frontend/ui/src/components/ui/`: Radix UI / shadcn style の UI primitive
+- `packages/frontend/ui/src/styles/globals.css`: Tailwind CSS の global styles と theme token
+- `packages/frontend/ui/src/lib/utils.ts`: class name composition などの UI helper
 
-const baseTheme = createTheme({
-  palette: {
-    primary: {
-      main: '#1976d2',
-      light: '#64b5f6',
-      dark: '#0d47a1',
-    },
-  },
-  shape: {
-    borderRadius: 12,
-  },
-});
-
-export const theme = responsiveFontSizes(baseTheme);
-```
+色や spacing などの基本 token を変える場合は `globals.css` を更新し、component primitive を追加する場合は `components/ui/` に配置してください。
 
 ### 新しいルートの追加
 
@@ -499,7 +492,7 @@ export const theme = responsiveFontSizes(baseTheme);
 
 ## コード品質
 
-このテンプレートには、一貫したコード標準を維持するための自動コード品質ツールが含まれています。
+このプロジェクトには、一貫したコード標準を維持するための自動コード品質ツールが含まれています。
 
 ### Git フック
 
@@ -591,6 +584,6 @@ pnpm check
 - [Hono ドキュメント](https://hono.dev/)
 - [Drizzle ORM ドキュメント](https://orm.drizzle.team/)
 - [React ドキュメント](https://react.dev/)
-- [Material UI ドキュメント](https://mui.com/)
+- [Radix UI ドキュメント](https://www.radix-ui.com/)
 - [TanStack Query ドキュメント](https://tanstack.com/query/latest)
 - [OpenSpec](https://github.com/fission-ai/openspec)

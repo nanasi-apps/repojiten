@@ -23,7 +23,8 @@ Read these files before applying `coding-guardian` in this repository.
 - `packages/frontend/app/package.json`: Vite React app scripts
 - `packages/frontend/domain/package.json`: domain hook package boundary
 - `packages/frontend/ui/package.json`: MUI-based shared UI package
-- `packages/frontend/ui/src/theme.ts`: visual system baseline used by the current app
+- `packages/frontend/ui/src/styles/globals.css`: visual system baseline used by the current app
+- `packages/frontend/ui/src/components/ui/**`: shared Radix/shadcn UI primitives
 
 ## Contract enforcement
 

@@ -3,25 +3,25 @@ import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { PanelLeft } from 'lucide-react';
 
-import { useIsMobile } from '@cfreact-template-frontend/ui/hooks/use-mobile';
-import { cn } from '@cfreact-template-frontend/ui/lib/utils';
-import { Button } from '@cfreact-template-frontend/ui/components/ui/button';
-import { Input } from '@cfreact-template-frontend/ui/components/ui/input';
-import { Separator } from '@cfreact-template-frontend/ui/components/ui/separator';
+import { useIsMobile } from '@repojiten/frontend-ui/hooks/use-mobile';
+import { cn } from '@repojiten/frontend-ui/lib/utils';
+import { Button } from '@repojiten/frontend-ui/components/ui/button';
+import { Input } from '@repojiten/frontend-ui/components/ui/input';
+import { Separator } from '@repojiten/frontend-ui/components/ui/separator';
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from '@cfreact-template-frontend/ui/components/ui/sheet';
-import { Skeleton } from '@cfreact-template-frontend/ui/components/ui/skeleton';
+} from '@repojiten/frontend-ui/components/ui/sheet';
+import { Skeleton } from '@repojiten/frontend-ui/components/ui/skeleton';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@cfreact-template-frontend/ui/components/ui/tooltip';
+} from '@repojiten/frontend-ui/components/ui/tooltip';
 
 const SIDEBAR_COOKIE_NAME = 'sidebar_state';
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;

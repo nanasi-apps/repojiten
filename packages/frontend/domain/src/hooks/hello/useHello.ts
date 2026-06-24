@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { helloApi } from '@cfreact-template-frontend/api';
+import { helloApi } from '@repojiten/frontend-api';
 
 /** Data exposed by the hello domain hook. */
 interface HelloData {

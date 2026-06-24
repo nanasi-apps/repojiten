@@ -1,1 +1,1 @@
-export { server as default } from '@cfreact-template-backend/app';
+export { server as default } from '@repojiten/backend-app';

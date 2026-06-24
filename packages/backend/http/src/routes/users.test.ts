@@ -6,16 +6,11 @@ import {
 import { env as testEnv } from 'cloudflare:workers';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { User, UserCreatedNotifier } from '@cfreact-template-backend/domain';
-import { openApiApp } from '@cfreact-template-backend/http';
-import { DrizzleUserRepository, createDrizzleClient } from '@cfreact-template-backend/persistence';
-import type { Bindings } from '@cfreact-template-backend/types';
-import {
-  CreateUser,
-  GetUser,
-  ListUsers,
-  type UsersUseCases,
-} from '@cfreact-template-backend/usecases';
+import type { User, UserCreatedNotifier } from '@repojiten/backend-domain';
+import { openApiApp } from '@repojiten/backend-http';
+import { DrizzleUserRepository, createDrizzleClient } from '@repojiten/backend-persistence';
+import type { Bindings } from '@repojiten/backend-types';
+import { CreateUser, GetUser, ListUsers, type UsersUseCases } from '@repojiten/backend-usecases';
 
 interface UserResponse {
   id: number;

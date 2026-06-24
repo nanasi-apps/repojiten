@@ -10,8 +10,8 @@ import {
   type FieldValues,
 } from 'react-hook-form';
 
-import { cn } from '@cfreact-template-frontend/ui/lib/utils';
-import { Label } from '@cfreact-template-frontend/ui/components/ui/label';
+import { cn } from '@repojiten/frontend-ui/lib/utils';
+import { Label } from '@repojiten/frontend-ui/components/ui/label';
 
 const Form = FormProvider;
 

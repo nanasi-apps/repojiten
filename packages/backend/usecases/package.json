@@ -1,5 +1,5 @@
 {
-  "name": "@cfreact-template-backend/usecases",
+  "name": "@repojiten/backend-usecases",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -8,8 +8,8 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "@cfreact-template-backend/domain": "workspace:*",
-    "@cfreact-template-backend/types": "workspace:*"
+    "@repojiten/backend-domain": "workspace:*",
+    "@repojiten/backend-types": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.9.3"
